@@ -45,8 +45,6 @@ function RenderActions({ d }) {
   let message = "";
   let color = "";
 
-  console.log(branch);
-
   if (event === "MERGE") {
     message = `${author} merged branch ${from_branch} to ${to_branch} on ${date}`;
     color = "bg-green-100 border-green-300 text-green-700";

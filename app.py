@@ -70,7 +70,7 @@ def get_events():
         return dumps(events), 200
 
     except Exception as e:
-        print("❌ Error in /events:", str(e))
+        print("Error in /events:", str(e))
         return jsonify({"error": "Could not fetch events"}), 500
 
 if __name__ == "__main__":
