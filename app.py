@@ -11,20 +11,10 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# Connect to MongoDB
-try:
-    MONGO_URL = os.getenv("MONGO_URL")
-    if not MONGO_URL:
-        raise ValueError("MONGO_URL not set in environment")
-
-    client = MongoClient(MONGO_URL)
-    db = client["webhooks"]
-    collection = db["events"]
-    print("✅ MongoDB connected successfully")
-
-except Exception as e:
-    print("❌ MongoDB connection error:", str(e))
-    collection = None
+MONGO_URL = os.getenv("MONGO_URL")
+client = MongoClient(MONGO_URL)
+db = client["webhooks"]
+collection = db["events"]
 
 @app.route("/", methods=["GET"])
 def home():
@@ -50,24 +40,18 @@ def webhook():
             "timestamp": timestamp
         }
 
-        if event_type == "pull_request":
+        if event_type in ["PULL_REQUEST","MERGE"] :
             record["from_branch"] = data.get("from_branch", "unknown")
             record["to_branch"] = data.get("to_branch", "unknown")
 
-        elif event_type == "merge":
-            record["from_branch"] = data.get("from_branch", "unknown")
-            record["to_branch"] = data.get("to_branch", "unknown")
-
-        elif event_type == "push":
+        elif event_type == "PUSH":
             record["branch"] = data.get("branch", "unknown")
 
         collection.insert_one(record)
-        print(f"✅ {event_type} event stored:", record)
-
         return jsonify({"message": f"{event_type} event stored successfully"}), 200
 
     except Exception as e:
-        print("❌ Error in /webhook:", str(e))
+        print("Error in /webhook:", str(e))
         return jsonify({"error": "Webhook failed"}), 500
 
 @app.route("/events", methods=["GET"])
@@ -75,10 +59,8 @@ def get_events():
     try:
         if collection is None:
             raise RuntimeError("MongoDB not connected")
-
-        # Fetch only documents with valid timestamp
-        events = list(collection.find({"timestamp": {"$exists": True}}).sort("timestamp", -1))
-        print(f"✅ {len(events)} events fetched")
+        
+        events = list(collection.find().sort("timestamp", -1))
         return dumps(events), 200
 
     except Exception as e:

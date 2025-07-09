@@ -5,7 +5,7 @@ export function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resp = await axios.get("https://webhook-backend-prwf.onrender.com/events");
+      const resp = await axios.get("http://localhost:5000/events");
       setData(resp.data);
     };
 
@@ -60,8 +60,6 @@ function RenderActions({ d }) {
   }
 
   return (
-    <div className={`p-4 border rounded-lg shadow-sm ${color}`}>
-      {message}
-    </div>
+    <div className={`p-4 border rounded-lg shadow-sm ${color}`}>{message}</div>
   );
 }
