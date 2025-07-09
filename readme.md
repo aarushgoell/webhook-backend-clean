@@ -43,29 +43,17 @@ This project receives GitHub webhook events (Push, Pull Request, Merge), stores 
   "to_branch": "main",
   "timestamp": "10 July 2025 - 12:30 PM IST"
 }
-📌 Webhook Format Examples
 ## 📌 Webhook Format Examples
 
 ### ✅ Push
 "Aarush" pushed to "main" on 10 July 2025 - 01:00 PM IST
 
-shell
-Copy
-Edit
-
 ### ✅ Pull Request
 "Aarush" submitted a pull request from "feature" to "main" on 10 July 2025 - 01:05 PM IST
 
-shell
-Copy
-Edit
 
 ### ✅ Merge (Bonus)
 "Aarush" merged branch "dev" to "main" on 10 July 2025 - 01:10 PM IST
-
-yaml
-Copy
-Edit
 
 ---
 
@@ -73,64 +61,41 @@ Edit
 
 ### 1. Clone the Repo
 
-```bash
 git clone https://github.com/aarushgoell/webhook-backend-clean.git
 cd webhook-backend-clean
-2. Create Virtual Environment
-bash
-Copy
-Edit
+### 2. Create Virtual Environment
+
 python -m venv venv
 .\venv\Scripts\activate
-3. Install Dependencies
-bash
-Copy
-Edit
+### 3.Install Dependencies
+
 pip install -r requirements.txt
-4. Add .env File
+
+### 4. Add .env File
 Create a file named .env with this:
 
-ini
-Copy
-Edit
 MONGO_URL=your_mongodb_connection_string
-5. Run Flask App
+### 5. Run Flask App
 bash
 Copy
 Edit
 python app.py
-6. Start Frontend (if in same repo)
-bash
-Copy
-Edit
+### 6. Start Frontend (if in same repo)
+
 cd client
 npm install
 npm start
-🧪 Testing Webhooks Locally
+
+### 🧪 Testing Webhooks Locally
 To test GitHub webhooks from your local machine:
+### Start your backend locally:
+python  app.py
 
-Start your backend locally:
-
-bash
-Copy
-Edit
-python app.py
-Start a tunnel using ngrok:
-
-bash
-Copy
-Edit
+#### Start a tunnel using ngrok:
 ngrok http 5000
 Copy the ngrok HTTPS URL and set it as the Webhook URL in GitHub under:
-
-Copy
-Edit
 action-repo → Settings → Webhooks
 Example:
-
-arduino
-Copy
-Edit
 https://your-ngrok-id.ngrok-free.app/webhook
 ☁️ Hosting
 Frontend: Deployed using Vercel
