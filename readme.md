@@ -32,17 +32,6 @@ This project receives GitHub webhook events (Push, Pull Request, Merge), stores 
 - ✅ Clean, minimal UI with Tailwind styling
 
 ---
-
-## 📦 MongoDB Schema
-
-````json
-{
-  "event": "PULL_REQUEST",
-  "author": "aarushgoell",
-  "from_branch": "feature-2",
-  "to_branch": "main",
-  "timestamp": "10 July 2025 - 12:30 PM IST"
-}
 ## 📌 Webhook Format Examples
 
 ### ✅ Push
