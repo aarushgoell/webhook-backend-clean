@@ -59,6 +59,7 @@ def webhook():
 
 def get_events():
     events = list(collection.find().sort("timestamp",-1))
+    print(events)
     return dumps(events),200
 
 if __name__ == "__main__":
