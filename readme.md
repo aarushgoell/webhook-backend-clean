@@ -35,7 +35,7 @@ This project receives GitHub webhook events (Push, Pull Request, Merge), stores 
 
 ## 📦 MongoDB Schema
 
-```json
+````json
 {
   "event": "PULL_REQUEST",
   "author": "aarushgoell",
@@ -44,78 +44,131 @@ This project receives GitHub webhook events (Push, Pull Request, Merge), stores 
   "timestamp": "10 July 2025 - 12:30 PM IST"
 }
 📌 Webhook Format Examples
-Push
+## 📌 Webhook Format Examples
+
+### ✅ Push
 "Aarush" pushed to "main" on 10 July 2025 - 01:00 PM IST
 
-Pull Request
+shell
+Copy
+Edit
+
+### ✅ Pull Request
 "Aarush" submitted a pull request from "feature" to "main" on 10 July 2025 - 01:05 PM IST
 
-Merge (bonus)
+shell
+Copy
+Edit
+
+### ✅ Merge (Bonus)
 "Aarush" merged branch "dev" to "main" on 10 July 2025 - 01:10 PM IST
 
-🖥️ Local Setup Instructions
-1. Clone the Repo
+yaml
+Copy
+Edit
 
+---
+
+## 🖥️ Local Setup Instructions
+
+### 1. Clone the Repo
+
+```bash
 git clone https://github.com/aarushgoell/webhook-backend-clean.git
-cd webhook-repo
+cd webhook-backend-clean
 2. Create Virtual Environment
-
+bash
+Copy
+Edit
 python -m venv venv
 .\venv\Scripts\activate
 3. Install Dependencies
-
+bash
+Copy
+Edit
 pip install -r requirements.txt
-
 4. Add .env File
-Create a .env file:
+Create a file named .env with this:
 
+ini
+Copy
+Edit
 MONGO_URL=your_mongodb_connection_string
 5. Run Flask App
-
+bash
+Copy
+Edit
 python app.py
-6. Start Frontend (if inside same repo)
-
+6. Start Frontend (if in same repo)
+bash
+Copy
+Edit
 cd client
 npm install
 npm start
 🧪 Testing Webhooks Locally
-Use ngrok to expose your local Flask server:
+To test GitHub webhooks from your local machine:
 
+Start your backend locally:
 
+bash
+Copy
+Edit
+python app.py
+Start a tunnel using ngrok:
+
+bash
+Copy
+Edit
 ngrok http 5000
-Copy the ngrok URL and set it as the webhook URL in your action-repo settings on GitHub.
+Copy the ngrok HTTPS URL and set it as the Webhook URL in GitHub under:
 
+Copy
+Edit
+action-repo → Settings → Webhooks
+Example:
+
+arduino
+Copy
+Edit
+https://your-ngrok-id.ngrok-free.app/webhook
 ☁️ Hosting
-Frontend: Vercel
+Frontend: Deployed using Vercel
+
+Backend: Deployed using Render or Railway
+
+GitHub Webhook sends real data to deployed /webhook endpoint
 
 ✅ Submission Checklist
- Webhook events handled
+ Webhook events handled (push, pull_request)
 
- Timestamp in IST
+ Timestamp converted to IST
 
- Data shown in UI
+ Data saved in MongoDB
 
- MongoDB schema correct
+ UI shows event updates every 15 seconds
 
- Hosted links ready
+ Hosted backend & frontend
 
- Bonus: Merge event handled
+ Bonus: Merge event handled ✅
 
 🙋 About
-This project was built as part of an internship application assignment to demonstrate:
+This project was built as part of an internship assignment to demonstrate:
 
-Full-stack development skills
+Full-stack development skills (MERN + Flask)
 
-GitHub integration via webhooks
+GitHub webhook integration
 
 Real-time data processing
 
-Deployment knowledge
+Deployment and DevOps fundamentals
 
 🔗 Related Repositories
-Webhook Listener (this repo): https://github.com/aarushgoell/webhook-backend-clean
+📥 Webhook Listener (Backend + Frontend)
+https://github.com/aarushgoell/webhook-backend-clean
 
-Triggering Repo (GitHub Actions): https://github.com/aarushgoell/action-repo
+⚙️ Triggering Repo (GitHub Actions)
+https://github.com/aarushgoell/action-repo
 
 💡 Built with 💙 by Aarush Goel — Ready to learn and contribute.
-```
+````
