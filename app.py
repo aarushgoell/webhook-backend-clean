@@ -40,14 +40,13 @@ def webhook():
         utc_time_str = pr.get("updated_at") if event_type == "pull_request" else data.get("repository", {}).get("pushed_at")
 
         if utc_time_str:
-            # Convert to datetime object
-            utc_dt = datetime.utcfromtimestamp(utc_time_str) if isinstance(utc_time_str, int) else datetime.strptime(utc_time_str, "%Y-%m-%dT%H:%M:%SZ")
-            
-            # Convert UTC to IST
+            utc_dt = (
+                datetime.utcfromtimestamp(utc_time_str)
+                if isinstance(utc_time_str, int)
+                else datetime.strptime(utc_time_str, "%Y-%m-%dT%H:%M:%SZ")
+            )
             ist = pytz.timezone("Asia/Kolkata")
             ist_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(ist)
-            
-            # Format as string (optional)
             timestamp = ist_dt.strftime("%d %B %Y - %I:%M %p IST")
         else:
             timestamp = "unknown"
@@ -62,10 +61,9 @@ def webhook():
              record["to_branch"] = data.get("ref", "unknown").split("/")[-1]
 
         elif event_type == "pull_request":
-            pr = data.get("pull_request", {})
+           
             record["from_branch"] = pr.get("head", {}).get("ref", "unknown")
             record["to_branch"] = pr.get("base", {}).get("ref", "unknown")
-            record["timestamp"] = pr.get("updated_at", "unknown")
 
         elif event_type == "merge_group":  # Optional
             record["from_branch"] = data.get("head_ref", "unknown")
