@@ -30,7 +30,7 @@ def webhook():
         if not data:
             return jsonify({"error": "Invalid JSON"}), 400
 
-        event_type = data.get("event", "unknown").lower()
+        event_type = data.get("event", "unknown")
         timestamp = data.get("timestamp", "unknown")
         author = data.get("author", "unknown")
 
