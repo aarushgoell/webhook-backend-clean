@@ -33,7 +33,7 @@ def home():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     try:
-        if not collection:
+        if collection is None:
             raise RuntimeError("MongoDB not connected")
 
         data = request.get_json()
@@ -73,7 +73,7 @@ def webhook():
 @app.route("/events", methods=["GET"])
 def get_events():
     try:
-        if not collection:
+        if collection is None:
             raise RuntimeError("MongoDB not connected")
 
         # Fetch only documents with valid timestamp
