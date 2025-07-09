@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+import pytz
+from datetime import datetime
 from pymongo import MongoClient
 from bson.json_util import dumps
 from dotenv import load_dotenv
@@ -33,6 +35,22 @@ def webhook():
         event_type = request.headers.get("X-GitHub-Event", "unknown")
         author = data.get("sender", {}).get("login", "unknown")
         timestamp = data.get("repository", {}).get("pushed_at", "unknown") 
+        pr = data.get("pull_request", {})
+
+        utc_time_str = pr.get("updated_at") if event_type == "pull_request" else data.get("repository", {}).get("pushed_at")
+
+        if utc_time_str:
+            # Convert to datetime object
+            utc_dt = datetime.utcfromtimestamp(utc_time_str) if isinstance(utc_time_str, int) else datetime.strptime(utc_time_str, "%Y-%m-%dT%H:%M:%SZ")
+            
+            # Convert UTC to IST
+            ist = pytz.timezone("Asia/Kolkata")
+            ist_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(ist)
+            
+            # Format as string (optional)
+            timestamp = ist_dt.strftime("%d %B %Y - %I:%M %p IST")
+        else:
+            timestamp = "unknown"
 
         record = {
             "event": event_type.upper(),

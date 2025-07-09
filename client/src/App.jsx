@@ -36,26 +36,20 @@ export function App() {
 function RenderActions({ d }) {
   const { event, author, timestamp, to_branch, from_branch } = d;
 
-  const date = new Date(timestamp).toLocaleString("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "UTC",
-  });
-
   let message = "";
   let color = "";
 
   if (event === "MERGE") {
-    message = `${author} merged branch ${from_branch} to ${to_branch} on ${date}`;
+    message = `${author} merged branch ${from_branch} to ${to_branch} on ${timestamp}`;
     color = "bg-green-100 border-green-300 text-green-700";
   } else if (event === "PUSH") {
-    message = `${author} pushed to ${to_branch} on ${date}`;
+    message = `${author} pushed to ${to_branch} on ${timestamp}`;
     color = "bg-blue-100 border-blue-300 text-blue-700";
   } else if (event === "PULL_REQUEST") {
-    message = `${author} submitted a pull request from ${from_branch} to ${to_branch} on ${date}`;
+    message = `${author} submitted a pull request from ${from_branch} to ${to_branch} on ${timestamp}`;
     color = "bg-yellow-100 border-yellow-300 text-yellow-800";
   } else {
-    message = `Unknown event by ${author} on ${date}`;
+    message = `Unknown event by ${author} on ${timestamp}`;
     color = "bg-gray-100 border-gray-300 text-gray-700";
   }
 
