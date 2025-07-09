@@ -49,7 +49,7 @@ function RenderActions({ d }) {
     message = `${author} merged branch ${from_branch} to ${to_branch} on ${date}`;
     color = "bg-green-100 border-green-300 text-green-700";
   } else if (event === "PUSH") {
-    message = `${author} pushed to ${branch} on ${date}`;
+    message = `${author} pushed to ${to_branch} on ${date}`;
     color = "bg-blue-100 border-blue-300 text-blue-700";
   } else if (event === "PULL_REQUEST") {
     message = `${author} submitted a pull request from ${from_branch} to ${to_branch} on ${date}`;
