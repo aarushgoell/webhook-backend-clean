@@ -5,7 +5,7 @@ export function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resp = await axios.get("http://localhost:5000/events");
+      const resp = await axios.get("https://webhook-backend-prwf.onrender.com/events");
       setData(resp.data);
     };
 
