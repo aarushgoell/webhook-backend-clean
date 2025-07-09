@@ -30,22 +30,28 @@ def webhook():
         if not data:
             return jsonify({"error": "Invalid JSON"}), 400
 
-        event_type = data.get("event", "unknown")
-        timestamp = data.get("timestamp", "unknown")
-        author = data.get("author", "unknown")
+        event_type = request.headers.get("X-GitHub-Event", "unknown")
+        author = data.get("sender", {}).get("login", "unknown")
+        timestamp = data.get("repository", {}).get("pushed_at", "unknown") 
 
         record = {
-            "event": event_type,
+            "event": event_type.upper(),
             "author": author,
             "timestamp": timestamp
         }
 
-        if event_type in ["PULL_REQUEST","MERGE"] :
-            record["from_branch"] = data.get("from_branch", "unknown")
-            record["to_branch"] = data.get("to_branch", "unknown")
+        if event_type == "push":
+             record["to_branch"] = data.get("ref", "unknown").split("/")[-1]
 
-        elif event_type == "PUSH":
-            record["branch"] = data.get("branch", "unknown")
+        elif event_type == "pull_request":
+            pr = data.get("pull_request", {})
+            record["from_branch"] = pr.get("head", {}).get("ref", "unknown")
+            record["to_branch"] = pr.get("base", {}).get("ref", "unknown")
+            record["timestamp"] = pr.get("updated_at", "unknown")
+
+        elif event_type == "merge_group":  # Optional
+            record["from_branch"] = data.get("head_ref", "unknown")
+            record["to_branch"] = data.get("base_ref", "unknown")
 
         collection.insert_one(record)
         return jsonify({"message": f"{event_type} event stored successfully"}), 200
