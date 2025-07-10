@@ -7,7 +7,10 @@ This project receives GitHub webhook events (Push, Pull Request, Merge), stores 
 ## 🌐 Live Demo
 
 - **Frontend (React + Tailwind)**: (https://webhook-backend-clean.vercel.app/)
-- **Backend (Flask API)**: Have to run on local host by python app.py
+- **Backend (Flask API)**: (https://webhook-backend-clean.onrender.com/events)
+
+If you want to make it work in your repo then add my backend URL : https://webhook-backend-clean.onrender.com/webhook  
+in your github webhook
 
 ---
 
