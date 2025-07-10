@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 import os
 
+
+port = int(os.environ.get("PORT", 5000))
+
 # Load environment variables
 load_dotenv()
 
@@ -88,6 +91,8 @@ def get_events():
     except Exception as e:
         print("Error in /events:", str(e))
         return jsonify({"error": "Could not fetch events"}), 500
+    
+    
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=port)
